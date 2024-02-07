@@ -4,7 +4,14 @@
  */
 package bell;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  *
@@ -12,6 +19,7 @@ import java.util.ArrayList;
  */
 public class Dog {
 
+    private Pound currentPound;
     private String name;
     private int age;
     private String breed;
@@ -33,8 +41,9 @@ public class Dog {
         howFull = 5;
     }
 
-    public Dog() {
-        name = "Spot";
+    public Dog(Pound currentPound, String name) {
+        this.currentPound = currentPound;
+        this.name = "Spot";
         age = 0;
         breed = "Golden Retriever";
         color = "Brown";
@@ -46,22 +55,133 @@ public class Dog {
 
     //custom methods here
     public void bark() {
+        String barkSound = "";
         if (weight < 7) {
             System.out.println("Yip Yip");
+            barkSound = "bark_1.wav";
         } else if (weight < 40) {
             System.out.println("Arf Arf");
+            barkSound = "bark_2.wav";
+
         } else if (weight < 70) {
             System.out.println("Bark Bark");
+            barkSound = "bark_3.wav";
+
         } else {
             System.out.println("Woof Woof");
+            barkSound = "bark_5.wav";
+
+        }
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(barkSound));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            audioInputStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        } catch (Exception ex) {
+            System.err.print(ex);
         }
     }
 
     public void sleep() {
         System.out.println("honkShoo");
+        currentPound.updatePicture("sleep");
+        while (howFull > 10) {
+            setHowFull(howFull - 10);
+            currentPound.updateStats(this);
+            try {
+                Thread.sleep(4);
+            } catch (InterruptedException err) {
+                //Lmao
+            }
+        }
+        currentPound.updatePicture("tired");
+        currentPound.updateStats(this);
     }
-    //getter and setters after constructors
 
+    public void eat() throws InterruptedException {
+
+        currentPound.updatePicture("eat");
+        currentPound.updatePanels();
+
+        while (howFull < 100) {
+             Thread.sleep(34);
+            setHowFull(howFull + 10);
+            currentPound.updateStats(this);
+        }
+        currentPound.updateStats(this);
+        currentPound.updatePicture("tired");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+        currentPound.updateStats(this);
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
+
+
+    }
+
+    public void run(int howLong) {
+        int paws = 200;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("dog_pant.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            audioInputStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        } catch (Exception ex) {
+            System.err.print(ex);
+        }
+        try {
+
+            for (int i = 0; i < howLong; i++) {
+                currentPound.disableButtons();
+
+                currentPound.updatePicture("run1");
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run2");
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run3");
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run2");
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                setHowFull(getHowFull() - 10);
+                if (getHowFull() < 10) {
+                    currentPound.enableButtons();
+                    currentPound.disableActionButtons();
+
+                    break;
+                }
+                currentPound.updateStats(this);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Dog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (howLong > 2) {
+            currentPound.updatePicture("tired");
+        } else {
+            currentPound.updatePicture("default");
+
+        }
+    }
+
+    //getter and setters after constructors
     public String getName() {
         return name;
     }
@@ -85,7 +205,7 @@ public class Dog {
     }
 
     public void setBreed(String breed) {
-        
+
         this.breed = breed;
     }
 
@@ -95,7 +215,7 @@ public class Dog {
 
     public void setColor(String color) {
         String newColor = color.toLowerCase();
-         for (int i = 0; i < color.length(); i++) {
+        for (int i = 0; i < color.length(); i++) {
             if (newColor.charAt(i) < 'a' || (newColor.charAt(i) > 'z')) {
                 if (newColor.charAt(i) != ' ') {
                     return;
@@ -106,9 +226,9 @@ public class Dog {
     }
 
     public double getHeight() {
-          if (height >= 2 || height < 96) {
-              this.height = height;
-        }   
+        if (height >= 2 || height < 96) {
+            this.height = height;
+        }
         return height;
     }
 
@@ -121,10 +241,10 @@ public class Dog {
     }
 
     public void setWeight(double weight) {
-         if (weight > 0|| height <= 350) {
-              this.height = height;
-        }   
-        
+        if (weight > 0 || height <= 350) {
+            this.height = height;
+        }
+
         this.weight = weight;
     }
 
