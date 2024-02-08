@@ -29,6 +29,7 @@ public class Dog {
     private String sex;
     private int howFull;//1-10-100 being full 1 being hungry
     private ArrayList<String> medicalConditions = new ArrayList<>();
+    private int howEepy;//1-10-100 being full 1 being hungry
 
     public Dog(String name, int age, String breed, String color, int height, double weight, String sex, ArrayList<String> medicalConditions) {
         this.name = name;
@@ -39,6 +40,8 @@ public class Dog {
         this.weight = weight;
         this.sex = sex;
         howFull = 5;
+        howEepy = 50;//1-10-100 being not tired 1 being eepy
+
     }
 
     public Dog(Pound currentPound, String name) {
@@ -51,6 +54,9 @@ public class Dog {
         weight = 70;
         sex = "Female";
         howFull = 5;
+        howEepy = 50;//1-10-100 being not tired 1 being eepy
+
+
     }
 
     //custom methods here
@@ -87,14 +93,20 @@ public class Dog {
         }
     }
 
+    public void fetch(String choice) {
+        run(2);
+        currentPound.updatePicture(choice);
+    }
+
     public void sleep() {
         System.out.println("honkShoo");
         currentPound.updatePicture("sleep");
         while (howFull > 10) {
             setHowFull(howFull - 10);
             currentPound.updateStats(this);
+            currentPound.updatePanels();
             try {
-                Thread.sleep(4);
+                Thread.sleep(90);
             } catch (InterruptedException err) {
                 //Lmao
             }
@@ -103,28 +115,33 @@ public class Dog {
         currentPound.updateStats(this);
     }
 
-    public void eat() throws InterruptedException {
+    public void eat() {
 
         currentPound.updatePicture("eat");
         currentPound.updatePanels();
 
         while (howFull < 100) {
-             Thread.sleep(34);
             setHowFull(howFull + 10);
             currentPound.updateStats(this);
+            currentPound.updatePanels();
+
+            try {
+                Thread.sleep(90);
+
+            } catch (InterruptedException err) {
+
+            }
         }
         currentPound.updateStats(this);
         currentPound.updatePicture("tired");
-        currentPound.updatePanels();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException err) {
             //Lmao
         }
         currentPound.updateStats(this);
         currentPound.updatePicture("default");
         currentPound.updatePanels();
-
 
     }
 
@@ -163,7 +180,6 @@ public class Dog {
                 setHowFull(getHowFull() - 10);
                 if (getHowFull() < 10) {
                     currentPound.enableButtons();
-                    currentPound.disableActionButtons();
 
                     break;
                 }
@@ -212,6 +228,7 @@ public class Dog {
     public String getColor() {
         return color;
     }
+    
 
     public void setColor(String color) {
         String newColor = color.toLowerCase();
@@ -274,7 +291,18 @@ public class Dog {
             this.howFull = howFull;
         }
     }
-
+     public int getHowEepy() {
+        return howEepy;
+    }
+ public void setHowEepy(int howEepy) {
+        if (howEepy > 100) {
+            this.howEepy = 100;
+        } else if (howEepy < 1) {
+            this.howEepy = 1;
+        } else {
+            this.howEepy = howEepy;
+        }
+    }
     public ArrayList<String> getMedicalConditions() {
         return medicalConditions;
     }
@@ -293,7 +321,7 @@ public class Dog {
 
     @Override
     public String toString() {
-        String output = "Name: " + name + ", age=" + age + ", breed=" + breed + ", color=" + color + ", height=" + height + ", weight=" + weight + ", sex=" + sex + ", howFull=" + howFull + '}';
+        String output = "Name: " + name + ", age=" + age + ", breed=" + breed + ", color=" + color + ", height=" + height + ", weight=" + weight + ", sex=" + sex + ", howFull=" + howFull +  ", howEepy=" + howEepy +'}';
         output += "\nMedical Conditions:";
         for (int i = 0; i < medicalConditions.size(); i++) {
             output += medicalConditions.get(i) + "\n";

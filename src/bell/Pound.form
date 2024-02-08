@@ -26,11 +26,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
               <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
               <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="209" max="-2" attributes="0"/>
-              <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="332" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -38,17 +36,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="439" max="-2" attributes="0"/>
-                      <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="389" max="32767" attributes="0"/>
@@ -66,7 +60,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="controlPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -74,7 +68,7 @@
                           <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="iconLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -85,11 +79,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="352" max="-2" attributes="0"/>
+                  <Component id="iconLabel" min="-2" pref="352" max="-2" attributes="0"/>
                   <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Component id="messageLabel" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="controlPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -102,14 +96,14 @@
             <Property name="text" type="java.lang.String" value="Hello World"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="iconLabel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/bell/dog1s20beast.png"/>
+              <Image iconType="3" name="/bell/dog1s20release.png"/>
             </Property>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="controlPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -157,7 +151,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="saveButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="updateButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="editButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -193,7 +187,7 @@
                           <Component id="newButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="openButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="saveButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="updateButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="editButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
@@ -204,6 +198,7 @@
             <Component class="javax.swing.JButton" name="layDownButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Lay Down"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layDownButtonActionPerformed"/>
@@ -212,6 +207,7 @@
             <Component class="javax.swing.JButton" name="walkButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Go on Walk"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="walkButtonActionPerformed"/>
@@ -220,17 +216,29 @@
             <Component class="javax.swing.JButton" name="eatButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eat"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eatButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="fetchButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fetch"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fetchButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="selectButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Select"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="newButton">
               <Properties>
@@ -243,7 +251,11 @@
             <Component class="javax.swing.JButton" name="barkButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Bark"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="barkButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="openButton">
               <Properties>
@@ -253,42 +265,65 @@
             <Component class="javax.swing.JButton" name="bathButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Take Bath"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="spinButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Spin"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="sleepButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sleep"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sleepButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="sitButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sit"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sitButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="saveButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="attackButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Attack"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="attackButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="runButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Run"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="updateButton">
+            <Component class="javax.swing.JButton" name="editButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Update"/>
+                <Property name="text" type="java.lang.String" value="Edit"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -312,8 +347,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Component id="tempLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="ageLabel" alignment="0" max="32767" attributes="0"/>
@@ -322,15 +355,22 @@
                           <Component id="jLabel10" alignment="0" pref="254" max="32767" attributes="0"/>
                           <Component id="colorLabel" alignment="0" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="jScrollPane1" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="genderLabel" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="SexLabel" alignment="0" max="32767" attributes="0"/>
                       <Component id="breedLabel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="howFullLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="nameLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="eepyProgressBar" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -339,19 +379,19 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="breedLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="genderLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="SexLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="colorLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="tempLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="ageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="weightLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
@@ -359,10 +399,14 @@
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="62" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="howFullLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="hungerProgressBar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="eepyProgressBar" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -378,7 +422,7 @@
             <Property name="text" type="java.lang.String" value="Name:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="genderLabel">
+        <Component class="javax.swing.JLabel" name="SexLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gender:"/>
           </Properties>
@@ -426,6 +470,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="conditionsTextArea">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value=" "/>
@@ -433,16 +478,21 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="howFullLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Hunger Level"/>
+            <Property name="text" type="java.lang.String" value="How full is..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="hungerProgressBar">
         </Component>
+        <Component class="javax.swing.JLabel" name="howEepyLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="How eepy is..."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="eepyProgressBar">
+        </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
-    </Component>
   </SubComponents>
 </Form>
