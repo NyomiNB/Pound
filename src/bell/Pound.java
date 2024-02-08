@@ -4,13 +4,10 @@
  */
 package bell;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -164,7 +161,7 @@ public class Pound extends javax.swing.JFrame {
                         } else {
                             messageLabel.setText("Update Canceled.");
                         }
-                                             break;
+                     break;
 
                     case "Gender":
                     //code here
@@ -182,7 +179,7 @@ public class Pound extends javax.swing.JFrame {
                             messageLabel.setText("Update Canceled.");
                         }                    
                     case "Age":
-                    //code here
+SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].getAge(), 0, 31,1);//current, minimum, max, incrimentation
                     case "Weight":
                     //code here
                     case "Height":
