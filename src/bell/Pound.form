@@ -297,6 +297,9 @@
                 <Property name="text" type="java.lang.String" value="Save"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="attackButton">
               <Properties>
@@ -363,14 +366,16 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="SexLabel" alignment="0" max="32767" attributes="0"/>
                       <Component id="breedLabel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="howFullLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="nameLabel" alignment="0" max="32767" attributes="0"/>
                       <Component id="eepyProgressBar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="howFullLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

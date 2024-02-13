@@ -4,10 +4,15 @@
  */
 package bell;
 
+import java.awt.Cursor;
+import java.io.File;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,7 +30,13 @@ public class Pound extends javax.swing.JFrame {
      */
     public Pound() {
         initComponents();
-
+//jList1MouseClicked {
+//if (evt.getClickCoung()==1) {//change to 2 if wnat double click
+//int index = jList1.locationToIndex(evt.getPoint());
+//currentDog = index;
+//updateStats(dogs[currentDog]);
+//changPicture("default);
+//}
         /*Dog myDog = new Dog();
         myDog.bark();
         System.out.println(myDog);*/
@@ -102,8 +113,8 @@ public class Pound extends javax.swing.JFrame {
 
         breedLabel.setText("Breed: " + dog.getBreed());
         SexLabel.setText("Gender: " + dog.getSex());
-        heightLabel.setText("Height: " + dog.getHeight());
-        weightLabel.setText("Weight: " + dog.getWeight());
+        heightLabel.setText("Height: " + dog.getHeight() + " inches");
+        weightLabel.setText("Weight: " + dog.getWeight() + " pounds");
         howFullLabel.setText("How full is " + dogs[currentDog].getName() + "?");
         hungerProgressBar.setValue(dog.getHowFull());
         howEepyLabel.setText("How eepy is " + dogs[currentDog].getName() + "?");
@@ -149,43 +160,157 @@ public class Pound extends javax.swing.JFrame {
                         }
                         break;
                     case "Breed":
-                    String breedInput = (String) JOptionPane.showInputDialog(displayPanel,
-                    "Please enter the dog's breed", "Update",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "Mutt");
-                     if ((breedInput != null) && (breedInput.length() > 0)) {
-                       dogs[currentDog].setBreed(breedInput);
+                        String breedInput = (String) JOptionPane.showInputDialog(displayPanel,
+                                "Please enter the dog's breed", "Update",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                null,
+                                "Mutt");
+                        if ((breedInput != null) && (breedInput.length() > 0)) {
+                            dogs[currentDog].setBreed(breedInput);
 
                         } else {
                             messageLabel.setText("Update Canceled.");
                         }
-                     break;
-
+                        break;
                     case "Gender":
-                    //code here
+                        Object[] options = {"Cancel", "Female",
+                            "Male"
+                        };
+                        int sexChoice = JOptionPane.showOptionDialog(displayPanel,
+                                "What would you like to change " + dogs[currentDog].getName() + "'s sex to?",
+                                "Update",
+                                JOptionPane.YES_NO_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                options,
+                                options[2]);
+                        if (sexChoice == 2) {
+                            dogs[currentDog].setSex("Male");
+                        } else if (sexChoice == 1) {
+                            dogs[currentDog].setSex("Female");
+                        } else {
+                            messageLabel.setText("Action Canceled");
+
+                        }
+                        updateStats(dogs[currentDog]);
+                        break;
                     case "Color":
-                   String colorInput = (String) JOptionPane.showInputDialog(displayPanel,
-                    "Please enter the dog's color", "Update",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "Brown");
-                     if ((colorInput != null) && (colorInput.length() > 0)) {
-                        dogs[currentDog].setColor(colorInput);
+                        String colorInput = (String) JOptionPane.showInputDialog(displayPanel,
+                                "Please enter the dog's color", "Update",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                null,
+                                "Brown");
+                        if ((colorInput != null) && (colorInput.length() > 0)) {
+                            dogs[currentDog].setColor(colorInput);
 
                         } else {
                             messageLabel.setText("Update Canceled.");
-                        }                    
+                        }
+                        break;
                     case "Age":
-SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].getAge(), 0, 31,1);//current, minimum, max, incrimentation
+                        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].getAge(), 0, 31, 1);//current, minimum, max, incrimentation
+                        JSpinner spinner = new JSpinner(spinnerNumberModel);
+
+                        int newAge = JOptionPane.showOptionDialog(displayPanel,
+                                spinner, "Enter Dog Age",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null, //do not use a custom Icon
+                                null, //the titles of buttons
+                                null); //default button title
+                        if (newAge == JOptionPane.OK_OPTION) {
+                            dogs[currentDog].setAge((int) spinner.getValue());
+                        } else {
+                            messageLabel.setText("Update Canceled.");
+                        }
+                        break;
                     case "Weight":
-                    //code here
+                        String weightInput = (String) JOptionPane.showInputDialog(
+                                displayPanel,
+                                "Please Enter " + dogs[currentDog].getName() + "'s weight in pounds!", "Update",
+                                JOptionPane.PLAIN_MESSAGE, null,
+                                null, null);//drop down menny put array in selectionValues
+
+                        if ((weightInput != null) && (weightInput.length() > 0)) {
+                            if (isNumeric(weightInput)) {
+                                dogs[currentDog].setHeight(Double.parseDouble(weightInput));
+
+                            } else {
+                                messageLabel.setText("Please enter a valid number value-ex. 5.4, 4, 10.2");
+                            }
+                        }
+                        break;
                     case "Height":
-                    //code here
+                        String heightInput = (String) JOptionPane.showInputDialog(
+                                displayPanel,
+                                "Please Enter " + dogs[currentDog].getName() + "'s height in inches!", "Update",
+                                JOptionPane.PLAIN_MESSAGE, null,
+                                null, null);//drop down menny put array in selectionValues
+
+                        if ((heightInput != null) && (heightInput.length() > 0)) {
+                            if (isNumeric(heightInput)) {
+                                dogs[currentDog].setHeight(Double.parseDouble(heightInput));
+
+                            } else {
+                                messageLabel.setText("Please enter a number value-ex. 23.");
+                            }
+                        }
+                        break;
                     case "Medical Conditions":
-                    //code here
+                        if (dogs[currentDog].getMedicalConditions().size() == 0) {
+                            String medInput = (String) JOptionPane.showInputDialog(displayPanel,
+                                    "Please enter medical condition", "Update",
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null,
+                                    null,
+                                    null);
+                            if ((medInput != null) && (medInput.length() > 0)) {
+                                dogs[currentDog].addCondition(medInput);
+                            }
+//                        } else {
+// Object[] conditionInputOption = {"add Condition", "Remove Condition", "Cancel"};
+//int conditionChoices = JOptionPane.showOptionDialog(displayPanel,
+//    "Medical Update",
+//    "Update",
+//    JOptionPane.YES_NO_CANCEL_OPTION,
+//    JOptionPane.QUESTION_MESSAGE,
+//    null,
+//    options,
+//    options[2]);
+//                        }  
+//                                if ((conditionChoices != null) && (conditionChoices.length() > 0)) {
+//                                    dogs[currentDog].addCondition(medInput);
+//                                }
+//                                String[] possibleConditions = new String[totalDogs];
+//                                for (int i = 0; i < totalDogs; i++) {
+//                                    possibleConditions[i] = dogs[i].getName();
+//                                }
+//                                String removeInput = (String) JOptionPane.showInputDialog(
+//                                        displayPanel,
+//                                        "Please enter the dog's name.", "Select Dog",
+//                                        JOptionPane.PLAIN_MESSAGE, null,
+//                                        removeInput, possibleConditions[0]);
+//                                controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//                                disableButtons();
+//                                if (removeInput != null) {
+//                                    currentDog = Arrays.asList(possibleConditions).indexOf(removeInput);
+//                                    updateStats(dogs[currentDog]);
+//                                    updatePicture("default");
+//                                    controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+//                                    enableButtons();
+//                                }
+//                                else if (conditionChoice ==1) {
+//                                   String [] currentConditions = new String [dogs[currentDog].getMedicalConditions().size()];
+//                                    for (int i = 0; i <currentConditions.length;i++) {
+//                                        currentConditions[i] = dogs[currentDog].getMedicalConditions().get(i);
+//                                    
+//                                }
+
+                        }
+
+                        break;
 
                 }
             } else {
@@ -197,12 +322,36 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
         }
     }//end of edit stats
 
-        /**
-         * This method is called from within the constructor to initialize the
-         * form. WARNING: Do NOT modify this code. The content of this method is
-         * always regenerated by the Form Editor.
-         */
-        @SuppressWarnings("unchecked")
+    public static boolean isDouble(String text) {
+        double newDouble = 0.0;
+        try {
+            newDouble = Double.valueOf(text);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }//end of isDouble method
+
+    public static boolean isInteger(String text) {
+        int newInt = 0;
+        try {
+            newInt = Integer.valueOf(text);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }//end of isInteger method
+
+    public static boolean isNumeric(String text) {
+        return (isDouble(text) || isInteger(text));
+    }//end of isNumeric
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -333,6 +482,11 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
 
         saveButton.setText("Save");
         saveButton.setEnabled(false);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         attackButton.setText("Attack");
         attackButton.setEnabled(false);
@@ -513,13 +667,14 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
                 .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SexLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(breedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(howFullLabel)
                     .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(eepyProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hungerProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(statsPanelLayout.createSequentialGroup()
-                        .addComponent(howEepyLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(hungerProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(howFullLabel)
+                            .addComponent(howEepyLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         statsPanelLayout.setVerticalGroup(
@@ -640,6 +795,8 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
                 "Fetch",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        disableButtons();
         if (userChoice == 0) {
             dogs[currentDog].fetch("fetch2");
         } else if (userChoice == 1) {
@@ -648,6 +805,8 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
             messageLabel.setText("Action Canceled");
 
         }
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        enableButtons();
     }//GEN-LAST:event_fetchButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
@@ -661,10 +820,14 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
                 "Please enter the dog's name.", "Select Dog",
                 JOptionPane.PLAIN_MESSAGE, null,
                 possibleNames, possibleNames[0]);
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        disableButtons();
         if (nameInput != null) {
             currentDog = Arrays.asList(possibleNames).indexOf(nameInput);
             updateStats(dogs[currentDog]);
             updatePicture("default");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
         }
     }//GEN-LAST:event_selectButtonActionPerformed
 
@@ -675,12 +838,21 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
         messageLabel.setText("");
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        disableButtons();
         dogs[currentDog].run(4);
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        enableButtons();
+
     }//GEN-LAST:event_runButtonActionPerformed
 
     private void sleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sleepButtonActionPerformed
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        disableButtons();
         messageLabel.setText("");
         dogs[currentDog].sleep();
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        enableButtons();
            }//GEN-LAST:event_sleepButtonActionPerformed
 
     private void sitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitButtonActionPerformed
@@ -688,8 +860,40 @@ SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(dogs[currentDog].
     }//GEN-LAST:event_sitButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-editStats();
+        editStats();
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        messageLabel.setText("");
+        //Custom button text
+        Object[] options = {"Dog", "Pound", "Cancel"};
+        int userChoice = JOptionPane.showOptionDialog(displayPanel,
+                "Would you like to save " + dogs[currentDog].getName() + " or your entire pound?",
+                "Save",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        if (userChoice == 0) {//save dog
+            JFileChooser fileChooser = new JFileChooser();
+             FileNameExtensionFilter dogFilter = new FileNameExtensionFilter("dog files (*.dog)","dog");
+            fileChooser.addChoosableFileFilter(dogFilter);
+            fileChooser.setFileFilter(dogFilter);
+            if (fileChooser.showSaveDialog(displayPanel) == JFileChooser.APPROVE_OPTION) {
+             File selectedFile = fileChooser.getSelectedFile();
+            }
+        } else if (userChoice == 1) {//save entire pound :0
+            dogs[currentDog].fetch("fetch1");
+        } else {
+            //custom title, warning icon
+            JOptionPane.showMessageDialog(displayPanel,
+                    "Save Action Cancelled",
+                    "Save Cancelled",
+                    JOptionPane.WARNING_MESSAGE);
+
+            messageLabel.setText("Action Canceled");
+        }
+        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        enableButtons();
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments

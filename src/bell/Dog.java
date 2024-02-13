@@ -56,7 +56,6 @@ public class Dog {
         howFull = 5;
         howEepy = 50;//1-10-100 being not tired 1 being eepy
 
-
     }
 
     //custom methods here
@@ -78,6 +77,7 @@ public class Dog {
             barkSound = "bark_5.wav";
 
         }
+        
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(barkSound));
             Clip clip = AudioSystem.getClip();
@@ -91,8 +91,32 @@ public class Dog {
         } catch (Exception ex) {
             System.err.print(ex);
         }
-    }
+    
+        currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+            try {
+                Thread.sleep(90);
+            } catch (InterruptedException err) {
+                //Lmao
+            }
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
+            try {
+                Thread.sleep(90);
+            } catch (InterruptedException err) {
+                //Lmao
+            }
+        currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+    try {
+                Thread.sleep(90);
+            } catch (InterruptedException err) {
+                //Lmao
+            }
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
 
+    }
     public void fetch(String choice) {
         run(2);
         currentPound.updatePicture(choice);
@@ -101,8 +125,10 @@ public class Dog {
     public void sleep() {
         System.out.println("honkShoo");
         currentPound.updatePicture("sleep");
-        while (howFull > 10) {
-            setHowFull(howFull - 10);
+        currentPound.updatePanels();
+        while (howEepy < 100) {
+            setHowFull(howFull - 2);
+            setHowEepy(howEepy + 2);
             currentPound.updateStats(this);
             currentPound.updatePanels();
             try {
@@ -113,6 +139,11 @@ public class Dog {
         }
         currentPound.updatePicture("tired");
         currentPound.updateStats(this);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
     }
 
     public void eat() {
@@ -146,7 +177,7 @@ public class Dog {
     }
 
     public void run(int howLong) {
-        int paws = 200;
+        int paws = 150;
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("dog_pant.wav"));
             Clip clip = AudioSystem.getClip();
@@ -163,24 +194,33 @@ public class Dog {
         try {
 
             for (int i = 0; i < howLong; i++) {
-                currentPound.disableButtons();
-
                 currentPound.updatePicture("run1");
+                currentPound.updateStats(this);
+                setHowFull(getHowFull() - 1);
+                setHowEepy(getHowEepy() - 1);
                 currentPound.updatePanels();
                 Thread.sleep(paws);
                 currentPound.updatePicture("run2");
+                setHowFull(getHowFull() - 1);
+                setHowEepy(getHowEepy() - 1);
+                currentPound.updateStats(this);
                 currentPound.updatePanels();
                 Thread.sleep(paws);
                 currentPound.updatePicture("run3");
+                setHowFull(getHowFull() - 1);
+                currentPound.updateStats(this);
                 currentPound.updatePanels();
                 Thread.sleep(paws);
                 currentPound.updatePicture("run2");
+                setHowFull(getHowFull() - 1);
+                 setHowEepy(getHowEepy() - 1);
+
+                currentPound.updateStats(this);
+
                 currentPound.updatePanels();
                 Thread.sleep(paws);
-                setHowFull(getHowFull() - 10);
+                setHowFull(getHowFull() - 1);
                 if (getHowFull() < 10) {
-                    currentPound.enableButtons();
-
                     break;
                 }
                 currentPound.updateStats(this);
@@ -228,7 +268,6 @@ public class Dog {
     public String getColor() {
         return color;
     }
-    
 
     public void setColor(String color) {
         String newColor = color.toLowerCase();
@@ -291,10 +330,12 @@ public class Dog {
             this.howFull = howFull;
         }
     }
-     public int getHowEepy() {
+
+    public int getHowEepy() {
         return howEepy;
     }
- public void setHowEepy(int howEepy) {
+
+    public void setHowEepy(int howEepy) {
         if (howEepy > 100) {
             this.howEepy = 100;
         } else if (howEepy < 1) {
@@ -303,6 +344,7 @@ public class Dog {
             this.howEepy = howEepy;
         }
     }
+
     public ArrayList<String> getMedicalConditions() {
         return medicalConditions;
     }
@@ -321,7 +363,7 @@ public class Dog {
 
     @Override
     public String toString() {
-        String output = "Name: " + name + ", age=" + age + ", breed=" + breed + ", color=" + color + ", height=" + height + ", weight=" + weight + ", sex=" + sex + ", howFull=" + howFull +  ", howEepy=" + howEepy +'}';
+        String output = "Name: " + name + ", age=" + age + ", breed=" + breed + ", color=" + color + ", height=" + height + ", weight=" + weight + ", sex=" + sex + ", howFull=" + howFull + ", howEepy=" + howEepy + '}';
         output += "\nMedical Conditions:";
         for (int i = 0; i < medicalConditions.size(); i++) {
             output += medicalConditions.get(i) + "\n";
