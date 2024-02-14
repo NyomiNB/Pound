@@ -6,6 +6,11 @@ package bell;
 
 import java.awt.Cursor;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -309,7 +314,6 @@ public class Pound extends javax.swing.JFrame {
 //                                }
 
                         }
-
                         break;
 
                 }
@@ -457,6 +461,11 @@ public class Pound extends javax.swing.JFrame {
         });
 
         openButton.setText("Open");
+        openButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openButtonActionPerformed(evt);
+            }
+        });
 
         bathButton.setText("Take Bath");
         bathButton.setEnabled(false);
@@ -755,7 +764,7 @@ public class Pound extends javax.swing.JFrame {
                 totalDogs++;
                 enableButtons();
                 if (totalDogs >= POUND_SIZE) {
-                    newButton.setEnabled(false);
+                    newButton.setEnabled(true);
                 }
             } else {
                 newButton.setEnabled(false);
@@ -874,14 +883,54 @@ public class Pound extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
         if (userChoice == 0) {//save dog
             JFileChooser fileChooser = new JFileChooser();
-             FileNameExtensionFilter dogFilter = new FileNameExtensionFilter("dog files (*.dog)","dog");
+            FileNameExtensionFilter dogFilter = new FileNameExtensionFilter("dog files (*.dog)", "dog");
             fileChooser.addChoosableFileFilter(dogFilter);
             fileChooser.setFileFilter(dogFilter);
+            fileChooser.setSelectedFile(new File(dogs[currentDog].getName() + ".dog"));
             if (fileChooser.showSaveDialog(displayPanel) == JFileChooser.APPROVE_OPTION) {
-             File selectedFile = fileChooser.getSelectedFile();
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();//will get entire file and save it as a string
+                if (!filePath.endsWith(".dog")) {
+                    selectedFile = new File(filePath + ".dog");
+                }
+                try {
+                    ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(selectedFile));//converting dog instance into file
+                    outputStream.writeObject(dogs[currentDog].getName());//writing current dog to file
+                    outputStream.close();
+                    messageLabel.setText("Save of " + (dogs[currentDog].getName()) + " Successful!");
+                } catch (IOException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Error writing to location.",
+                            "Save Error!",
+                            JOptionPane.WARNING_MESSAGE);
+
+                }
             }
         } else if (userChoice == 1) {//save entire pound :0
-            dogs[currentDog].fetch("fetch1");
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter poundFilter = new FileNameExtensionFilter("pound files (*.pnd)", "pnd");
+            fileChooser.addChoosableFileFilter(poundFilter);
+            fileChooser.setFileFilter(poundFilter);
+            fileChooser.setSelectedFile(new File("Pound.pnd"));
+            if (fileChooser.showSaveDialog(displayPanel) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();//will get entire file and save it as a string
+                if (!filePath.endsWith(".pnd")) {
+                    selectedFile = new File(filePath + ".pnd");
+                }
+                try {
+                    ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(selectedFile));//converting dog instance into file
+                    outputStream.writeObject(dogs);// 
+                    outputStream.close();
+                    messageLabel.setText("Save of Pound Successful!");
+                } catch (IOException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Error writing to location.",
+                            "Save Error!",
+                            JOptionPane.WARNING_MESSAGE);
+
+                }
+            }
         } else {
             //custom title, warning icon
             JOptionPane.showMessageDialog(displayPanel,
@@ -892,8 +941,146 @@ public class Pound extends javax.swing.JFrame {
             messageLabel.setText("Action Canceled");
         }
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        enableButtons();
+        enableButtons(); // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+        messageLabel.setText("");
+        //Custom button text
+        Object[] options = {"Dog", "Pound", "Cancel"};
+        int userChoice = JOptionPane.showOptionDialog(displayPanel,
+                "Would you like to open " + dogs[currentDog].getName() + " or your entire pound?",
+                "Open",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        if (userChoice == 0) {//open dog
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter dogFilter = new FileNameExtensionFilter("dog files (*.dog)", "dog");
+            fileChooser.addChoosableFileFilter(dogFilter);
+            fileChooser.setFileFilter(dogFilter);
+
+            if (fileChooser.showOpenDialog(displayPanel) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                //String filePath = selectedFile.getAbsolutePath();//will get entire file and save it as a string
+//                if (!filePath.endsWith(".dog")) {
+//                    selectedFile = new File(filePath + ".dog");//not necessary-computer will open file regardless as long as it's a dog fle
+//                }
+                try {
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(selectedFile));//converting dog instance into file
+                    inputStream.readObject();//writing current dog to file
+                    Dog dog = (Dog) inputStream.readObject();
+//                    messageLabel.setText("Open of " + (dogs[currentDog].getName()) + " Successful!");
+                    inputStream.close();
+                    if (totalDogs < POUND_SIZE) {
+                        dogs[totalDogs] = dog;
+                        dogs[totalDogs].setCurrentPound(this);
+                        currentDog = totalDogs;
+                        updateStats(dogs[currentDog]);
+                        totalDogs++;
+                        updatePicture("default");
+                        messageLabel.setText("Hello, my name is " + dogs[currentDog].getName());
+
+                        enableButtons();
+                    } else {
+                        if (totalDogs >= POUND_SIZE) {
+                            newButton.setEnabled(true);
+                        } else {
+
+                            Object[] openOptions = {"Overwrite", "Cancel"};
+                            int overwriteChoice = JOptionPane.showOptionDialog(displayPanel,
+                                    "Would you like to overwrite the current dog?",
+                                    "Pound at Capacity :(",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                            if (overwriteChoice == 0) {
+                                dogs[currentDog] = dog;
+                                updateStats(dogs[currentDog]);
+                                updatePicture("default");
+                                messageLabel.setText("Hello, my name is " + dogs[currentDog].getName());
+                                enableButtons();
+                            } else {
+                                messageLabel.setText("Action Canceled");
+                            }
+                            newButton.setEnabled(false);
+                            System.out.println("Your pound has reached the limit");
+
+                        }
+                    }
+                } catch (IOException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Error reading file.",
+                            "Reading Error!",
+                            JOptionPane.WARNING_MESSAGE);
+                } catch (ClassNotFoundException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Invalid Dog File",
+                            "Open Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else if (userChoice == 1) {//open entire pound :0
+            JOptionPane.showMessageDialog(displayPanel,
+                    "Are you sure? The current pound will be DELETED D:",
+                    "Overwrite pound?",
+                    JOptionPane.WARNING_MESSAGE);
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter poundFilter = new FileNameExtensionFilter("pound files (*.pnd)", "pnd");
+            fileChooser.addChoosableFileFilter(poundFilter);
+            fileChooser.setFileFilter(poundFilter);
+
+            if (fileChooser.showOpenDialog(displayPanel) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                try {
+                    ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(selectedFile));//converting dog instance into file
+                    inputStream.readObject();//writing current dog to file
+                    Dog[] doggies = (Dog[]) inputStream.readObject();
+                    inputStream.close();
+                    if (doggies.length <= POUND_SIZE) {
+                        dogs = doggies;
+                        dogs[totalDogs].setCurrentPound(this);
+                        currentDog = 0;
+                        updateStats(dogs[currentDog]);
+                        for (int i = 0; i < doggies.length; i++) {
+                            if (doggies[i] == null) {
+                                totalDogs = i;
+                                break;
+                            } else {
+                                doggies[i].setCurrentPound(this);
+                            }
+                        }
+                        updatePicture("default");
+                        messageLabel.setText("Hello, my name is " + dogs[currentDog].getName() + "!");
+                        enableButtons();
+                    } else {
+                        if (totalDogs >= POUND_SIZE) {
+                            newButton.setEnabled(false);
+                        } else {
+
+                            JOptionPane.showMessageDialog(displayPanel,
+                                    "The pound size is too big.",
+                                    "Open Error!",
+                                    JOptionPane.WARNING_MESSAGE);
+
+                        }
+                    }
+                } catch (IOException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Error reading file.",
+                            "Reading Error!",
+                            JOptionPane.WARNING_MESSAGE);
+                } catch (ClassNotFoundException err) {
+                    JOptionPane.showMessageDialog(displayPanel,
+                            "Invalid Dog File",
+                            "Open Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else {
+            messageLabel.setText("Action Canceled");
+        }
+
+
+    }//GEN-LAST:event_openButtonActionPerformed
 
     /**
      * @param args the command line arguments

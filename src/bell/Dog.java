@@ -5,6 +5,7 @@
 package bell;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,9 +18,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author HPro1
  */
-public class Dog {
+public class Dog implements Serializable {
 
-    private Pound currentPound;
+    private transient Pound currentPound;
     private String name;
     private int age;
     private String breed;
@@ -127,7 +128,7 @@ public class Dog {
         currentPound.updatePicture("sleep");
         currentPound.updatePanels();
         while (howEepy < 100) {
-            setHowFull(howFull - 2);
+            setHowFull(howFull - 1);
             setHowEepy(howEepy + 2);
             currentPound.updateStats(this);
             currentPound.updatePanels();
@@ -359,6 +360,10 @@ public class Dog {
 
     public void removeCondition(String condition) {
         medicalConditions.remove(condition);//deletes only first instance
+    }
+
+    public void setCurrentPound(Pound currentPound) {
+        this.currentPound = currentPound;
     }
 
     @Override
