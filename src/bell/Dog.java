@@ -127,7 +127,7 @@ public class Dog implements Serializable {
         System.out.println("honkShoo");
         currentPound.updatePicture("sleep");
         currentPound.updatePanels();
-        while (howEepy < 100) {
+         while (howEepy < 100) {
             setHowFull(howFull - 1);
             setHowEepy(howEepy + 2);
             currentPound.updateStats(this);
@@ -145,7 +145,7 @@ public class Dog implements Serializable {
         } catch (InterruptedException err) {
             //Lmao
         }
-    }
+      }
 
     public void eat() {
 

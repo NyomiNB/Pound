@@ -28,24 +28,19 @@
               <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
               <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="332" max="32767" attributes="0"/>
+              <EmptySpace pref="786" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                      <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                      <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
+                  <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="389" max="32767" attributes="0"/>
+              <EmptySpace pref="460" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -352,16 +347,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="tempLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="ageLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="weightLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="heightLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel10" alignment="0" pref="254" max="32767" attributes="0"/>
-                          <Component id="colorLabel" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane1" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="tempLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="ageLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="weightLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="heightLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel10" alignment="0" pref="254" max="32767" attributes="0"/>
+                      <Component id="colorLabel" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -370,24 +362,35 @@
                       <Component id="SexLabel" alignment="0" max="32767" attributes="0"/>
                       <Component id="breedLabel" alignment="0" max="32767" attributes="0"/>
                       <Component id="nameLabel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="eepyProgressBar" alignment="0" max="32767" attributes="0"/>
-                      <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="howFullLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="howFullLabel2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="howEepyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="howFullLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="howFullLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
+              <Component id="hungerProgressBar" alignment="0" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" max="32767" attributes="0"/>
+              <Component id="eepyProgressBar" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howFullLabel3" max="32767" attributes="0"/>
+              </Group>
+              <Component id="howFullLabel4" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="breedLabel" min="-2" max="-2" attributes="0"/>
@@ -407,14 +410,22 @@
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="62" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="howFullLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Component id="howFullLabel" min="-2" pref="14" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="hungerProgressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howFullLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howFullLabel4" min="-2" pref="28" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="howEepyLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="eepyProgressBar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howFullLabel2" min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="howFullLabel3" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -488,6 +499,9 @@
         </Container>
         <Component class="javax.swing.JLabel" name="howFullLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="13" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="How full is..."/>
           </Properties>
         </Component>
@@ -495,10 +509,33 @@
         </Component>
         <Component class="javax.swing.JLabel" name="howEepyLabel">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="13" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="How eepy is..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="eepyProgressBar">
+        </Component>
+        <Component class="javax.swing.JLabel" name="howFullLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0                                                         100"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="howFullLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0                                                         100"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="howFullLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="exhausted                                  energized"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="howFullLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="starved                                                full"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

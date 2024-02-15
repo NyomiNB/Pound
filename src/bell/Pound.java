@@ -274,55 +274,35 @@ public class Pound extends javax.swing.JFrame {
                             if ((medInput != null) && (medInput.length() > 0)) {
                                 dogs[currentDog].addCondition(medInput);
                             }
-//                        } else {
-// Object[] conditionInputOption = {"add Condition", "Remove Condition", "Cancel"};
-//int conditionChoices = JOptionPane.showOptionDialog(displayPanel,
-//    "Medical Update",
-//    "Update",
-//    JOptionPane.YES_NO_CANCEL_OPTION,
-//    JOptionPane.QUESTION_MESSAGE,
-//    null,
-//    options,
-//    options[2]);
-//                        }  
-//                                if ((conditionChoices != null) && (conditionChoices.length() > 0)) {
-//                                    dogs[currentDog].addCondition(medInput);
-//                                }
-//                                String[] possibleConditions = new String[totalDogs];
-//                                for (int i = 0; i < totalDogs; i++) {
-//                                    possibleConditions[i] = dogs[i].getName();
-//                                }
-//                                String removeInput = (String) JOptionPane.showInputDialog(
-//                                        displayPanel,
-//                                        "Please enter the dog's name.", "Select Dog",
-//                                        JOptionPane.PLAIN_MESSAGE, null,
-//                                        removeInput, possibleConditions[0]);
-//                                controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//                                disableButtons();
-//                                if (removeInput != null) {
-//                                    currentDog = Arrays.asList(possibleConditions).indexOf(removeInput);
-//                                    updateStats(dogs[currentDog]);
-//                                    updatePicture("default");
-//                                    controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-//                                    enableButtons();
-//                                }
-//                                else if (conditionChoice ==1) {
-//                                   String [] currentConditions = new String [dogs[currentDog].getMedicalConditions().size()];
-//                                    for (int i = 0; i <currentConditions.length;i++) {
-//                                        currentConditions[i] = dogs[currentDog].getMedicalConditions().get(i);
-//                                    
-//                                }
+                        } else {
+                            Object[] conditionInputOption = {"add Condition", "Remove Condition", "Cancel"};
+                            int conditionChoices = JOptionPane.showOptionDialog(displayPanel,
+                                    "Medical Update",
+                                    "Update",
+                                    JOptionPane.YES_NO_CANCEL_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    conditionInputOption,
+                                    conditionInputOption[2]);
+                            if (conditionChoices == 0) {
+                                String conditionInput = (String) JOptionPane.showInputDialog(
+                                        displayPanel, "Please enter medical condition.", "Update Information", JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+                                if ((conditionInput != null) && (conditionInput.length() > 0)) {
+                                    dogs[currentDog].addCondition(conditionInput);
+                                }
+                            } else if (conditionChoices == 1) {
+                                String[] currentConditions = new String[dogs[currentDog].getMedicalConditions().size()];
+                                for (int i = 0; i < currentConditions.length; i++) {
+                                    currentConditions[i] = dogs[currentDog].getMedicalConditions().get(i);
+                                }
+
+                            }
+                            break;
 
                         }
-                        break;
-
                 }
-            } else {
-                newButton.setEnabled(false);
-                System.out.println("Your pound has reached the limit");
-
             }
-            updateStats(dogs[currentDog]);
         }
     }//end of edit stats
 
@@ -395,6 +375,10 @@ public class Pound extends javax.swing.JFrame {
         hungerProgressBar = new javax.swing.JProgressBar();
         howEepyLabel = new javax.swing.JLabel();
         eepyProgressBar = new javax.swing.JProgressBar();
+        howFullLabel1 = new javax.swing.JLabel();
+        howFullLabel2 = new javax.swing.JLabel();
+        howFullLabel3 = new javax.swing.JLabel();
+        howFullLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -653,43 +637,60 @@ public class Pound extends javax.swing.JFrame {
         conditionsTextArea.setText(" ");
         jScrollPane1.setViewportView(conditionsTextArea);
 
+        howFullLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         howFullLabel.setText("How full is...");
 
+        howEepyLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         howEepyLabel.setText("How eepy is...");
+
+        howFullLabel1.setText("0                                                         100");
+
+        howFullLabel2.setText("0                                                         100");
+
+        howFullLabel3.setText("exhausted                                  energized");
+
+        howFullLabel4.setText("starved                                                full");
 
         javax.swing.GroupLayout statsPanelLayout = new javax.swing.GroupLayout(statsPanel);
         statsPanel.setLayout(statsPanelLayout);
         statsPanelLayout.setHorizontalGroup(
             statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statsPanelLayout.createSequentialGroup()
-                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tempLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ageLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(weightLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(heightLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                        .addComponent(colorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tempLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ageLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(weightLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(heightLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                    .addComponent(colorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(statsPanelLayout.createSequentialGroup()
                 .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SexLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(breedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(eepyProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hungerProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(statsPanelLayout.createSequentialGroup()
                         .addGroup(statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(statsPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(howFullLabel2))
+                            .addComponent(howEepyLabel)
                             .addComponent(howFullLabel)
-                            .addComponent(howEepyLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(howFullLabel1))
+                        .addGap(0, 2, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(hungerProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addComponent(eepyProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(statsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(howFullLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(howFullLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         statsPanelLayout.setVerticalGroup(
             statsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statsPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(nameLabel)
                 .addGap(18, 18, 18)
                 .addComponent(breedLabel)
@@ -710,13 +711,21 @@ public class Pound extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(howFullLabel)
+                .addComponent(howFullLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hungerProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(howFullLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(howFullLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(howEepyLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(eepyProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(eepyProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(howFullLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(howFullLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -728,40 +737,38 @@ public class Pound extends javax.swing.JFrame {
                 .addComponent(displayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(101, 101, 101)
                 .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(332, Short.MAX_VALUE))
+                .addContainerGap(786, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(displayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(389, Short.MAX_VALUE))
+                    .addComponent(displayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(460, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        if (totalDogs < POUND_SIZE) {
+    if (totalDogs < POUND_SIZE) {
             Object[] possibleNames = {"Fido", "Spot", "Spike", "Butch", "Lady", "Duke"};
             String nameInput = (String) JOptionPane.showInputDialog(
                     displayPanel,
                     "Please Enter the Dog's Name!", "New Dog",
                     JOptionPane.PLAIN_MESSAGE, null,
-                    null, possibleNames[totalDogs % possibleNames.length]);//drop down menny put array in selectionValues
+                    null, possibleNames[totalDogs % possibleNames.length]);//drop down  put array in selectionValues
 
             if ((nameInput != null) && (nameInput.length() > 0)) {
-                dogs[totalDogs] = new Dog(this, nameInput);
+                 dogs[totalDogs] = new Dog(this, nameInput);
                 updatePicture("default");
                 messageLabel.setText("Hi, my name is " + dogs[totalDogs].getName() + ".");
                 currentDog = totalDogs;
                 updateStats(dogs[currentDog]);
                 totalDogs++;
+ 
                 enableButtons();
                 if (totalDogs >= POUND_SIZE) {
                     newButton.setEnabled(true);
@@ -846,22 +853,40 @@ public class Pound extends javax.swing.JFrame {
     }//GEN-LAST:event_barkButtonActionPerformed
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+     if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
         messageLabel.setText("");
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         disableButtons();
         dogs[currentDog].run(4);
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         enableButtons();
+          System.out.println(dogs[currentDog].getHowEepy());
+                    System.out.println(dogs[currentDog].getHowFull());
+       } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+        messageLabel.setText(dogs[currentDog].getName() + " is too tired to run!");
+
+       }  else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+        messageLabel.setText(dogs[currentDog].getName() + " is too hungry to run!");
+       } else {
+        messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to run!");
+ 
+       }
 
     }//GEN-LAST:event_runButtonActionPerformed
 
     private void sleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sleepButtonActionPerformed
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    //goes up by 50
+    if (dogs[currentDog].getHowEepy() < 100) {
+ controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         disableButtons();
         messageLabel.setText("");
-        dogs[currentDog].sleep();
+       dogs[currentDog].sleep();
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        enableButtons();
+        enableButtons(); 
+       } else if (dogs[currentDog].getHowEepy() == 100) {
+       messageLabel.setText(dogs[currentDog].getName() + " is not tired right now!");
+       }
+       
            }//GEN-LAST:event_sleepButtonActionPerformed
 
     private void sitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitButtonActionPerformed
@@ -1135,6 +1160,10 @@ public class Pound extends javax.swing.JFrame {
     private javax.swing.JLabel heightLabel;
     private javax.swing.JLabel howEepyLabel;
     private javax.swing.JLabel howFullLabel;
+    private javax.swing.JLabel howFullLabel1;
+    private javax.swing.JLabel howFullLabel2;
+    private javax.swing.JLabel howFullLabel3;
+    private javax.swing.JLabel howFullLabel4;
     private javax.swing.JProgressBar hungerProgressBar;
     private javax.swing.JLabel iconLabel;
     private javax.swing.JLabel jLabel10;
