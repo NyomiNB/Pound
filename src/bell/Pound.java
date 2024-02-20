@@ -4,6 +4,7 @@
  */
 package bell;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -34,6 +36,9 @@ public class Pound extends javax.swing.JFrame {
      * Creates new form Pound
      */
     public Pound() {
+        UIManager.put("Button.background", new Color (198, 139, 255));
+//                       UIManager.put("Button.background", new Color (206, 255, 172));
+
         initComponents();
 //jList1MouseClicked {
 //if (evt.getClickCoung()==1) {//change to 2 if wnat double click
@@ -805,6 +810,15 @@ public class Pound extends javax.swing.JFrame {
     private void fetchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fetchButtonActionPerformed
         messageLabel.setText("");
         //Custom button text
+      if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+        messageLabel.setText(dogs[currentDog].getName() + " is too tired to fetch!");
+
+       }  else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+        messageLabel.setText(dogs[currentDog].getName() + " is too hungry to fetch!");
+       } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+        messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to fetch!");
+ 
+       } else {
         Object[] options = {"Stick", "Newspaper", "Cancel"};
         int userChoice = JOptionPane.showOptionDialog(displayPanel,
                 "What would you like " + dogs[currentDog].getName() + " to fetch?",
@@ -823,6 +837,7 @@ public class Pound extends javax.swing.JFrame {
         }
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         enableButtons();
+       }
     }//GEN-LAST:event_fetchButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
@@ -1117,12 +1132,20 @@ public class Pound extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
+            //Nimbus(NetBeans)
+            UIManager.put("nimbusOrange", new Color(10,23,200));
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
+//Java Default 
+//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+// Set System L&F
+//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Pound.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
