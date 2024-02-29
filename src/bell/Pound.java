@@ -6,6 +6,7 @@ package bell;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,12 +32,14 @@ public class Pound extends javax.swing.JFrame {
     Dog[] dogs = new Dog[POUND_SIZE];
     int totalDogs;
     int currentDog = -1;
+//add file in project folder 
+    //
 
     /**
      * Creates new form Pound
      */
     public Pound() {
-        UIManager.put("Button.background", new Color (198, 139, 255));
+        UIManager.put("Button.background", new Color(177, 156,  217));
 //                       UIManager.put("Button.background", new Color (206, 255, 172));
 
         initComponents();
@@ -60,9 +63,9 @@ public class Pound extends javax.swing.JFrame {
     public void enableButtons() {
         sitButton.setEnabled(true);
         layDownButton.setEnabled(true);
-        walkButton.setEnabled(true);
-        bathButton.setEnabled(true);
-        spinButton.setEnabled(true);
+        flyButton.setEnabled(true);
+        peeButton.setEnabled(true);
+        poopButton.setEnabled(true);
         fetchButton.setEnabled(true);
         eatButton.setEnabled(true);
         sleepButton.setEnabled(true);
@@ -81,9 +84,9 @@ public class Pound extends javax.swing.JFrame {
     public void disableButtons() {
         sitButton.setEnabled(false);
         layDownButton.setEnabled(false);
-        walkButton.setEnabled(false);
-        bathButton.setEnabled(false);
-        spinButton.setEnabled(false);
+        flyButton.setEnabled(false);
+        peeButton.setEnabled(false);
+        poopButton.setEnabled(false);
         fetchButton.setEnabled(false);
         eatButton.setEnabled(false);
         sleepButton.setEnabled(false);
@@ -94,25 +97,7 @@ public class Pound extends javax.swing.JFrame {
         saveButton.setEnabled(false);
         editButton.setEnabled(false);
         openButton.setEnabled(false);
-        if (totalDogs < POUND_SIZE) {
-            newButton.setEnabled(false);
-        }
-    }
-
-    public void disableActionButtons() {
-        bathButton.setEnabled(false);
-        runButton.setEnabled(false);
-
-        barkButton.setEnabled(false);
-        spinButton.setEnabled(false);
-        fetchButton.setEnabled(false);
-        attackButton.setEnabled(false);
-        walkButton.setEnabled(false);
-        sitButton.setEnabled(false);
-        sleepButton.setEnabled(false);
-        if (totalDogs < POUND_SIZE) {
-            newButton.setEnabled(false);
-        }
+        newButton.setEnabled(false);
     }
 
     public void updateStats(Dog dog) {
@@ -143,12 +128,14 @@ public class Pound extends javax.swing.JFrame {
     }
 
     public void editStats() {
+
         if (totalDogs < POUND_SIZE) {
+            ImageIcon icon = new ImageIcon(getClass().getResource("dog1s20beast.png"));
             Object[] editPossibilities = {"Name", "Breed", "Gender", "Color", "Age", "Weight", "Height", "Medical Conditions"};
             String editChoice = (String) JOptionPane.showInputDialog(displayPanel,
                     "What information would you like to update?", "Update",
                     JOptionPane.PLAIN_MESSAGE,
-                    null,
+                    icon,
                     editPossibilities,
                     "Name");
 
@@ -165,8 +152,9 @@ public class Pound extends javax.swing.JFrame {
 
                         if ((nameInput != null) && (nameInput.length() > 0)) {
                             dogs[currentDog].setName(nameInput);
+                            updateStats(dogs[currentDog]);
                         } else {
-                            messageLabel.setText("Update Canceled.");
+                            messageLabel.setText("Update Cancelled.");
                         }
                         break;
                     case "Breed":
@@ -178,9 +166,10 @@ public class Pound extends javax.swing.JFrame {
                                 "Mutt");
                         if ((breedInput != null) && (breedInput.length() > 0)) {
                             dogs[currentDog].setBreed(breedInput);
+                            updateStats(dogs[currentDog]);
 
                         } else {
-                            messageLabel.setText("Update Canceled.");
+                            messageLabel.setText("Update Cancelled.");
                         }
                         break;
                     case "Gender":
@@ -197,10 +186,13 @@ public class Pound extends javax.swing.JFrame {
                                 options[2]);
                         if (sexChoice == 2) {
                             dogs[currentDog].setSex("Male");
+                            updateStats(dogs[currentDog]);
+
                         } else if (sexChoice == 1) {
                             dogs[currentDog].setSex("Female");
+                            updateStats(dogs[currentDog]);
                         } else {
-                            messageLabel.setText("Action Canceled");
+                            messageLabel.setText("Action Cancelled");
 
                         }
                         updateStats(dogs[currentDog]);
@@ -214,9 +206,10 @@ public class Pound extends javax.swing.JFrame {
                                 "Brown");
                         if ((colorInput != null) && (colorInput.length() > 0)) {
                             dogs[currentDog].setColor(colorInput);
+                            updateStats(dogs[currentDog]);
 
                         } else {
-                            messageLabel.setText("Update Canceled.");
+                            messageLabel.setText("Update Cancelled.");
                         }
                         break;
                     case "Age":
@@ -232,8 +225,11 @@ public class Pound extends javax.swing.JFrame {
                                 null); //default button title
                         if (newAge == JOptionPane.OK_OPTION) {
                             dogs[currentDog].setAge((int) spinner.getValue());
+                            updateStats(dogs[currentDog]);
+                            messageLabel.setText("Happy Birthday, " + dogs[currentDog].getName() + "!");
+
                         } else {
-                            messageLabel.setText("Update Canceled.");
+                            messageLabel.setText("Update Cancelled.");
                         }
                         break;
                     case "Weight":
@@ -245,10 +241,19 @@ public class Pound extends javax.swing.JFrame {
 
                         if ((weightInput != null) && (weightInput.length() > 0)) {
                             if (isNumeric(weightInput)) {
-                                dogs[currentDog].setHeight(Double.parseDouble(weightInput));
+                                Double.parseDouble(weightInput);
+                                if (Integer.parseInt(weightInput) > 0) {
+                                    if (Integer.parseInt(weightInput) < 350) {
+                                        dogs[currentDog].setWeight(Integer.parseInt(weightInput));
+                                        updateStats(dogs[currentDog]);
 
+                                    } else {
+                                        messageLabel.setText("Please enter a weight 0-350 pounds");
+
+                                    }
+                                }
                             } else {
-                                messageLabel.setText("Please enter a valid number value-ex. 5.4, 4, 10.2");
+                                messageLabel.setText("Please enter a number value-ex. 23.");
                             }
                         }
                         break;
@@ -261,8 +266,19 @@ public class Pound extends javax.swing.JFrame {
 
                         if ((heightInput != null) && (heightInput.length() > 0)) {
                             if (isNumeric(heightInput)) {
-                                dogs[currentDog].setHeight(Double.parseDouble(heightInput));
 
+                                Double.parseDouble(heightInput);
+                                if (Double.parseDouble(heightInput) > 2) {
+                                    if (Double.parseDouble(heightInput) < 96) {
+                                        dogs[currentDog].setHeight(Double.parseDouble(heightInput));
+                                        updateStats(dogs[currentDog]);
+
+                                    }
+
+                                } else {
+                                    messageLabel.setText("Please enter a height 2-96 inches");
+
+                                }
                             } else {
                                 messageLabel.setText("Please enter a number value-ex. 23.");
                             }
@@ -278,6 +294,8 @@ public class Pound extends javax.swing.JFrame {
                                     null);
                             if ((medInput != null) && (medInput.length() > 0)) {
                                 dogs[currentDog].addCondition(medInput);
+                                updateStats(dogs[currentDog]);
+
                             }
                         } else {
                             Object[] conditionInputOption = {"add Condition", "Remove Condition", "Cancel"};
@@ -295,12 +313,21 @@ public class Pound extends javax.swing.JFrame {
 
                                 if ((conditionInput != null) && (conditionInput.length() > 0)) {
                                     dogs[currentDog].addCondition(conditionInput);
+                                    updateStats(dogs[currentDog]);
                                 }
                             } else if (conditionChoices == 1) {
+                                String conditionInput = (String) JOptionPane.showInputDialog(
+                                        displayPanel, "Please enter medical condition.", "Update Information", JOptionPane.PLAIN_MESSAGE, null, null, null);
                                 String[] currentConditions = new String[dogs[currentDog].getMedicalConditions().size()];
                                 for (int i = 0; i < currentConditions.length; i++) {
                                     currentConditions[i] = dogs[currentDog].getMedicalConditions().get(i);
+                                    dogs[currentDog].removeCondition(conditionInput);
+                                    updateStats(dogs[currentDog]);
+
                                 }
+
+                            } else {
+                                messageLabel.setText("Update Cancelled.");
 
                             }
                             break;
@@ -349,15 +376,15 @@ public class Pound extends javax.swing.JFrame {
         iconLabel = new javax.swing.JLabel();
         controlPanel = new javax.swing.JPanel();
         layDownButton = new javax.swing.JButton();
-        walkButton = new javax.swing.JButton();
+        flyButton = new javax.swing.JButton();
         eatButton = new javax.swing.JButton();
         fetchButton = new javax.swing.JButton();
         selectButton = new javax.swing.JButton();
         newButton = new javax.swing.JButton();
         barkButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
-        bathButton = new javax.swing.JButton();
-        spinButton = new javax.swing.JButton();
+        peeButton = new javax.swing.JButton();
+        poopButton = new javax.swing.JButton();
         sleepButton = new javax.swing.JButton();
         sitButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -388,7 +415,7 @@ public class Pound extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        messageLabel.setText("Hello World");
+        messageLabel.setText(" ");
 
         iconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bell/dog1s20release.png"))); // NOI18N
 
@@ -402,11 +429,11 @@ public class Pound extends javax.swing.JFrame {
             }
         });
 
-        walkButton.setText("Go on Walk");
-        walkButton.setEnabled(false);
-        walkButton.addActionListener(new java.awt.event.ActionListener() {
+        flyButton.setText("Fly");
+        flyButton.setEnabled(false);
+        flyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                walkButtonActionPerformed(evt);
+                flyButtonActionPerformed(evt);
             }
         });
 
@@ -456,11 +483,21 @@ public class Pound extends javax.swing.JFrame {
             }
         });
 
-        bathButton.setText("Take Bath");
-        bathButton.setEnabled(false);
+        peeButton.setText("Pee");
+        peeButton.setEnabled(false);
+        peeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                peeButtonActionPerformed(evt);
+            }
+        });
 
-        spinButton.setText("Spin");
-        spinButton.setEnabled(false);
+        poopButton.setText("Poop");
+        poopButton.setEnabled(false);
+        poopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                poopButtonActionPerformed(evt);
+            }
+        });
 
         sleepButton.setText("Sleep");
         sleepButton.setEnabled(false);
@@ -524,11 +561,11 @@ public class Pound extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(controlPanelLayout.createSequentialGroup()
-                        .addComponent(walkButton)
+                        .addComponent(flyButton)
                         .addGap(18, 18, 18)
-                        .addComponent(bathButton)
+                        .addComponent(peeButton)
                         .addGap(18, 18, 18)
-                        .addComponent(spinButton))
+                        .addComponent(poopButton))
                     .addGroup(controlPanelLayout.createSequentialGroup()
                         .addComponent(eatButton)
                         .addGap(18, 18, 18)
@@ -550,16 +587,16 @@ public class Pound extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        controlPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {attackButton, barkButton, bathButton, eatButton, editButton, fetchButton, layDownButton, newButton, openButton, runButton, saveButton, selectButton, sitButton, sleepButton, spinButton, walkButton});
+        controlPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {attackButton, barkButton, eatButton, editButton, fetchButton, flyButton, layDownButton, newButton, openButton, peeButton, poopButton, runButton, saveButton, selectButton, sitButton, sleepButton});
 
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(walkButton)
-                    .addComponent(bathButton)
-                    .addComponent(spinButton)
+                    .addComponent(flyButton)
+                    .addComponent(peeButton)
+                    .addComponent(poopButton)
                     .addComponent(layDownButton))
                 .addGap(18, 18, 18)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -582,7 +619,7 @@ public class Pound extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        controlPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {attackButton, barkButton, bathButton, eatButton, editButton, fetchButton, layDownButton, newButton, openButton, runButton, saveButton, selectButton, sitButton, sleepButton, spinButton, walkButton});
+        controlPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {attackButton, barkButton, eatButton, editButton, fetchButton, flyButton, layDownButton, newButton, openButton, peeButton, poopButton, runButton, saveButton, selectButton, sitButton, sleepButton});
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
         displayPanel.setLayout(displayPanelLayout);
@@ -595,20 +632,19 @@ public class Pound extends javax.swing.JFrame {
                         .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayPanelLayout.createSequentialGroup()
-                        .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(113, 113, 113))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayPanelLayout.createSequentialGroup()
-                        .addComponent(iconLabel)
-                        .addGap(98, 98, 98))))
+                        .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iconLabel))
+                        .addGap(92, 92, 92))))
         );
         displayPanelLayout.setVerticalGroup(
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -740,9 +776,9 @@ public class Pound extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(234, 234, 234)
                 .addComponent(displayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
+                .addGap(81, 81, 81)
                 .addComponent(statsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(786, Short.MAX_VALUE))
+                .addContainerGap(846, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -758,7 +794,7 @@ public class Pound extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-    if (totalDogs < POUND_SIZE) {
+        if (totalDogs < POUND_SIZE) {
             Object[] possibleNames = {"Fido", "Spot", "Spike", "Butch", "Lady", "Duke"};
             String nameInput = (String) JOptionPane.showInputDialog(
                     displayPanel,
@@ -767,77 +803,117 @@ public class Pound extends javax.swing.JFrame {
                     null, possibleNames[totalDogs % possibleNames.length]);//drop down  put array in selectionValues
 
             if ((nameInput != null) && (nameInput.length() > 0)) {
-                 dogs[totalDogs] = new Dog(this, nameInput);
+                dogs[totalDogs] = new Dog(this, nameInput);
                 updatePicture("default");
                 messageLabel.setText("Hi, my name is " + dogs[totalDogs].getName() + ".");
                 currentDog = totalDogs;
                 updateStats(dogs[currentDog]);
                 totalDogs++;
- 
-                enableButtons();
-                if (totalDogs >= POUND_SIZE) {
-                    newButton.setEnabled(true);
-                }
-            } else {
-                newButton.setEnabled(false);
-                System.out.println("Your pound has reached the limit");
 
+                enableButtons();
+                if (totalDogs < POUND_SIZE) {
+                    newButton.setEnabled(true);
+                } else {
+                    newButton.setEnabled(false);
+                    System.out.println("Your pound has reached the limit");
+
+                }
             }
         }
-
 
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void layDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_layDownButtonActionPerformed
         updatePicture("tired");
-
     }//GEN-LAST:event_layDownButtonActionPerformed
 
-    private void walkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_walkButtonActionPerformed
-        updatePicture("run2");
-    }//GEN-LAST:event_walkButtonActionPerformed
+    private void flyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flyButtonActionPerformed
+        if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText("");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            dogs[currentDog].fly(3);
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+            System.out.println(dogs[currentDog].getHowEepy());
+            System.out.println(dogs[currentDog].getHowFull());
+        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to fly!");
+
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to fly!");
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to fly!");
+        }
+    }//GEN-LAST:event_flyButtonActionPerformed
 
     private void eatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eatButtonActionPerformed
         messageLabel.setText("");
-        dogs[currentDog].eat();
+        if (dogs[currentDog].getHowFull() < 100) {
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            messageLabel.setText(dogs[currentDog].getName() + " is eating!");
+            dogs[currentDog].eat();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is not hungry right now!");
+        }
+
     }//GEN-LAST:event_eatButtonActionPerformed
 
     private void attackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attackButtonActionPerformed
-        updatePicture("beast");
+        if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText("");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            dogs[currentDog].attack();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+            System.out.println(dogs[currentDog].getHowEepy());
+            System.out.println(dogs[currentDog].getHowFull());
+        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to attack!");
 
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to attack!");
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to attack!");
+
+        }
     }//GEN-LAST:event_attackButtonActionPerformed
 
     private void fetchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fetchButtonActionPerformed
         messageLabel.setText("");
         //Custom button text
-      if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
-        messageLabel.setText(dogs[currentDog].getName() + " is too tired to fetch!");
+        if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to fetch!");
 
-       }  else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
-        messageLabel.setText(dogs[currentDog].getName() + " is too hungry to fetch!");
-       } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
-        messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to fetch!");
- 
-       } else {
-        Object[] options = {"Stick", "Newspaper", "Cancel"};
-        int userChoice = JOptionPane.showOptionDialog(displayPanel,
-                "What would you like " + dogs[currentDog].getName() + " to fetch?",
-                "Fetch",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        disableButtons();
-        if (userChoice == 0) {
-            dogs[currentDog].fetch("fetch2");
-        } else if (userChoice == 1) {
-            dogs[currentDog].fetch("fetch1");
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to fetch!");
+        } else if (dogs[currentDog].getHowEepy() <= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to fetch!");
+
         } else {
-            messageLabel.setText("Action Canceled");
+            Object[] options = {"Stick", "Newspaper", "Cancel"};
+            int userChoice = JOptionPane.showOptionDialog(displayPanel,
+                    "What would you like " + dogs[currentDog].getName() + " to fetch?",
+                    "Fetch",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            if (userChoice == 0) {
+                dogs[currentDog].fetch("fetch2");
+            } else if (userChoice == 1) {
+                dogs[currentDog].fetch("fetch1");
+            } else {
+                messageLabel.setText("Action Cancelled");
 
+            }
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
         }
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        enableButtons();
-       }
     }//GEN-LAST:event_fetchButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
@@ -851,9 +927,7 @@ public class Pound extends javax.swing.JFrame {
                 "Please enter the dog's name.", "Select Dog",
                 JOptionPane.PLAIN_MESSAGE, null,
                 possibleNames, possibleNames[0]);
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        disableButtons();
-        if (nameInput != null) {
+         if (nameInput != null) {
             currentDog = Arrays.asList(possibleNames).indexOf(nameInput);
             updateStats(dogs[currentDog]);
             updatePicture("default");
@@ -868,40 +942,40 @@ public class Pound extends javax.swing.JFrame {
     }//GEN-LAST:event_barkButtonActionPerformed
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
-     if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
-        messageLabel.setText("");
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        disableButtons();
-        dogs[currentDog].run(4);
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        enableButtons();
-          System.out.println(dogs[currentDog].getHowEepy());
-                    System.out.println(dogs[currentDog].getHowFull());
-       } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
-        messageLabel.setText(dogs[currentDog].getName() + " is too tired to run!");
+        if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText("");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            dogs[currentDog].run(4);
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+            System.out.println(dogs[currentDog].getHowEepy());
+            System.out.println(dogs[currentDog].getHowFull());
+        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to run!");
 
-       }  else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
-        messageLabel.setText(dogs[currentDog].getName() + " is too hungry to run!");
-       } else {
-        messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to run!");
- 
-       }
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to run!");
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to run!");
+
+        }
 
     }//GEN-LAST:event_runButtonActionPerformed
 
     private void sleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sleepButtonActionPerformed
-    //goes up by 50
-    if (dogs[currentDog].getHowEepy() < 100) {
- controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        disableButtons();
-        messageLabel.setText("");
-       dogs[currentDog].sleep();
-        controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        enableButtons(); 
-       } else if (dogs[currentDog].getHowEepy() == 100) {
-       messageLabel.setText(dogs[currentDog].getName() + " is not tired right now!");
-       }
-       
+        //goes up by 50
+        if (dogs[currentDog].getHowEepy() < 100) {
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            messageLabel.setText("");
+            dogs[currentDog].sleep();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+        } else if (dogs[currentDog].getHowEepy() == 100) {
+            messageLabel.setText(dogs[currentDog].getName() + " is not tired right now!");
+        }
+
            }//GEN-LAST:event_sleepButtonActionPerformed
 
     private void sitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitButtonActionPerformed
@@ -934,8 +1008,9 @@ public class Pound extends javax.swing.JFrame {
                     selectedFile = new File(filePath + ".dog");
                 }
                 try {
+//                    System.out.println(dogs[currentDog].toString());
                     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(selectedFile));//converting dog instance into file
-                    outputStream.writeObject(dogs[currentDog].getName());//writing current dog to file
+                    outputStream.writeObject(dogs[currentDog]);//writing current dog to file
                     outputStream.close();
                     messageLabel.setText("Save of " + (dogs[currentDog].getName()) + " Successful!");
                 } catch (IOException err) {
@@ -978,7 +1053,7 @@ public class Pound extends javax.swing.JFrame {
                     "Save Cancelled",
                     JOptionPane.WARNING_MESSAGE);
 
-            messageLabel.setText("Action Canceled");
+            messageLabel.setText("Action Cancelled");
         }
         controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         enableButtons(); // TODO add your handling code here:
@@ -989,7 +1064,7 @@ public class Pound extends javax.swing.JFrame {
         //Custom button text
         Object[] options = {"Dog", "Pound", "Cancel"};
         int userChoice = JOptionPane.showOptionDialog(displayPanel,
-                "Would you like to open " + dogs[currentDog].getName() + " or your entire pound?",
+                "Would you like to open a dog or an entire pound?",
                 "Open",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
@@ -1007,8 +1082,8 @@ public class Pound extends javax.swing.JFrame {
 //                }
                 try {
                     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(selectedFile));//converting dog instance into file
-                    inputStream.readObject();//writing current dog to file
                     Dog dog = (Dog) inputStream.readObject();
+//                    System.out.println(dog.toString());
 //                    messageLabel.setText("Open of " + (dogs[currentDog].getName()) + " Successful!");
                     inputStream.close();
                     if (totalDogs < POUND_SIZE) {
@@ -1022,8 +1097,8 @@ public class Pound extends javax.swing.JFrame {
 
                         enableButtons();
                     } else {
-                        if (totalDogs >= POUND_SIZE) {
-                            newButton.setEnabled(true);
+                        if (totalDogs <= POUND_SIZE) {
+                            newButton.setEnabled(false);
                         } else {
 
                             Object[] openOptions = {"Overwrite", "Cancel"};
@@ -1039,7 +1114,7 @@ public class Pound extends javax.swing.JFrame {
                                 messageLabel.setText("Hello, my name is " + dogs[currentDog].getName());
                                 enableButtons();
                             } else {
-                                messageLabel.setText("Action Canceled");
+                                messageLabel.setText("Action Cancelled");
                             }
                             newButton.setEnabled(false);
                             System.out.println("Your pound has reached the limit");
@@ -1047,6 +1122,7 @@ public class Pound extends javax.swing.JFrame {
                         }
                     }
                 } catch (IOException err) {
+                    err.printStackTrace();
                     JOptionPane.showMessageDialog(displayPanel,
                             "Error reading file.",
                             "Reading Error!",
@@ -1072,7 +1148,6 @@ public class Pound extends javax.swing.JFrame {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
                     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(selectedFile));//converting dog instance into file
-                    inputStream.readObject();//writing current dog to file
                     Dog[] doggies = (Dog[]) inputStream.readObject();
                     inputStream.close();
                     if (doggies.length <= POUND_SIZE) {
@@ -1086,10 +1161,11 @@ public class Pound extends javax.swing.JFrame {
                                 break;
                             } else {
                                 doggies[i].setCurrentPound(this);
+                                messageLabel.setText("Hello, my name is " + dogs[currentDog].getName() + "!");
+
                             }
                         }
                         updatePicture("default");
-                        messageLabel.setText("Hello, my name is " + dogs[currentDog].getName() + "!");
                         enableButtons();
                     } else {
                         if (totalDogs >= POUND_SIZE) {
@@ -1116,11 +1192,54 @@ public class Pound extends javax.swing.JFrame {
                 }
             }
         } else {
-            messageLabel.setText("Action Canceled");
+            messageLabel.setText("Action Cancelled");
         }
 
 
     }//GEN-LAST:event_openButtonActionPerformed
+
+    private void peeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peeButtonActionPerformed
+        if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText("");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            dogs[currentDog].pee();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+            System.out.println(dogs[currentDog].getHowEepy());
+            System.out.println(dogs[currentDog].getHowFull());
+        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to go on a walk!");
+
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to go on a walk!");
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to go on a walk!");
+
+        }
+
+    }//GEN-LAST:event_peeButtonActionPerformed
+
+    private void poopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poopButtonActionPerformed
+        if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText("");
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+            dogs[currentDog].poop();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+            System.out.println(dogs[currentDog].getHowEepy());
+            System.out.println(dogs[currentDog].getHowFull());
+        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired to go on a walk!");
+
+        } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
+            messageLabel.setText(dogs[currentDog].getName() + " is too hungry to go on a walk!");
+        } else {
+            messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to go on a walk!");
+
+        }
+    }//GEN-LAST:event_poopButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1133,7 +1252,7 @@ public class Pound extends javax.swing.JFrame {
          */
         try {
             //Nimbus(NetBeans)
-            UIManager.put("nimbusOrange", new Color(10,23,200));
+            UIManager.put("nimbusOrange", new Color(173, 216, 230));
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -1144,7 +1263,6 @@ public class Pound extends javax.swing.JFrame {
 //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 // Set System L&F
 //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
 
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Pound.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -1160,7 +1278,10 @@ public class Pound extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pound().setVisible(true);
+                Pound pound = new Pound();
+                Image image = new ImageIcon("dogs.png").getImage();
+                pound.setIconImage(image);
+                pound.setVisible(true);
             }
         });
     }
@@ -1170,7 +1291,6 @@ public class Pound extends javax.swing.JFrame {
     private javax.swing.JLabel ageLabel;
     private javax.swing.JButton attackButton;
     private javax.swing.JButton barkButton;
-    private javax.swing.JButton bathButton;
     private javax.swing.JLabel breedLabel;
     private javax.swing.JLabel colorLabel;
     private javax.swing.JTextArea conditionsTextArea;
@@ -1180,6 +1300,7 @@ public class Pound extends javax.swing.JFrame {
     private javax.swing.JButton editButton;
     private javax.swing.JProgressBar eepyProgressBar;
     private javax.swing.JButton fetchButton;
+    private javax.swing.JButton flyButton;
     private javax.swing.JLabel heightLabel;
     private javax.swing.JLabel howEepyLabel;
     private javax.swing.JLabel howFullLabel;
@@ -1196,15 +1317,15 @@ public class Pound extends javax.swing.JFrame {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JButton newButton;
     private javax.swing.JButton openButton;
+    private javax.swing.JButton peeButton;
+    private javax.swing.JButton poopButton;
     private javax.swing.JButton runButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton selectButton;
     private javax.swing.JButton sitButton;
     private javax.swing.JButton sleepButton;
-    private javax.swing.JButton spinButton;
     private javax.swing.JPanel statsPanel;
     private javax.swing.JLabel tempLabel;
-    private javax.swing.JButton walkButton;
     private javax.swing.JLabel weightLabel;
     // End of variables declaration//GEN-END:variables
 }

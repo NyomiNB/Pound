@@ -47,7 +47,7 @@ public class Dog implements Serializable {
 
     public Dog(Pound currentPound, String name) {
         this.currentPound = currentPound;
-        this.name = "Spot";
+        this.name = name;
         age = 0;
         breed = "Golden Retriever";
         color = "Brown";
@@ -60,6 +60,9 @@ public class Dog implements Serializable {
     }
 
     //custom methods here
+    /**
+     * plays bark audio depending on dog weight
+     */
     public void bark() {
         String barkSound = "";
         if (weight < 7) {
@@ -78,7 +81,7 @@ public class Dog implements Serializable {
             barkSound = "bark_5.wav";
 
         }
-        
+
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(barkSound));
             Clip clip = AudioSystem.getClip();
@@ -92,42 +95,175 @@ public class Dog implements Serializable {
         } catch (Exception ex) {
             System.err.print(ex);
         }
-    
+
         currentPound.updatePicture("beast");
         currentPound.updatePanels();
-            try {
-                Thread.sleep(90);
-            } catch (InterruptedException err) {
-                //Lmao
-            }
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
         currentPound.updatePicture("default");
         currentPound.updatePanels();
-            try {
-                Thread.sleep(90);
-            } catch (InterruptedException err) {
-                //Lmao
-            }
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
         currentPound.updatePicture("beast");
         currentPound.updatePanels();
-    try {
-                Thread.sleep(90);
-            } catch (InterruptedException err) {
-                //Lmao
-            }
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
         currentPound.updatePicture("default");
         currentPound.updatePanels();
 
     }
+
+    public void pee() {
+        currentPound.updatePicture("pee");
+        currentPound.updatePanels();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException err) {
+        }
+        setHowFull(getHowFull() - 2);
+        currentPound.updateStats(this);
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
+    }
+
+    public void poop() {
+        currentPound.updatePicture("poop");
+        currentPound.updatePanels();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException err) {
+        }
+        setHowFull(getHowFull() - 4);
+        currentPound.updateStats(this);
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
+    }
+
     public void fetch(String choice) {
         run(2);
         currentPound.updatePicture(choice);
     }
 
+    public void attack() {
+        String barkSound = "";
+        String growl = "dog_growl.wav";
+        if (weight < 7) {
+            System.out.println("Yip Yip");
+            barkSound = "bark_1.wav";
+        } else if (weight < 40) {
+            System.out.println("Arf Arf");
+            barkSound = "bark_2.wav";
+
+        } else if (weight < 70) {
+            System.out.println("Bark Bark");
+            barkSound = "bark_3.wav";
+
+        } else {
+            System.out.println("Woof Woof");
+            barkSound = "bark_5.wav";
+
+        }
+
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(barkSound));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            audioInputStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        } catch (Exception ex) {
+            System.err.print(ex);
+        }
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(growl));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            audioInputStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        } catch (Exception ex) {
+            System.err.print(ex);
+        }
+
+        currentPound.updatePicture("beast");
+        currentPound.updateStats(this);
+
+        currentPound.updatePanels();
+
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+        setHowFull(getHowFull() - 1);
+        setHowEepy(getHowEepy() - 1);
+
+        currentPound.updatePicture("default");
+        currentPound.updateStats(this);
+
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+        setHowFull(getHowFull() - 1);
+        setHowEepy(getHowEepy() - 1);
+
+        currentPound.updatePicture("beast");
+        currentPound.updateStats(this);
+
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+        setHowFull(getHowFull() - 1);
+        setHowEepy(getHowEepy() - 1);
+
+        currentPound.updatePicture("beast");
+        currentPound.updateStats(this);
+
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+        setHowFull(getHowFull() - 1);
+        setHowEepy(getHowEepy() - 1);
+
+        currentPound.updatePicture("default");
+        currentPound.updatePanels();
+
+    }
+
+    /**
+     * displays sleep image until sleep bar is full
+     */
     public void sleep() {
         System.out.println("honkShoo");
         currentPound.updatePicture("sleep");
         currentPound.updatePanels();
-         while (howEepy < 100) {
+        while (howEepy < 100) {
             setHowFull(howFull - 1);
             setHowEepy(howEepy + 2);
             currentPound.updateStats(this);
@@ -145,8 +281,77 @@ public class Dog implements Serializable {
         } catch (InterruptedException err) {
             //Lmao
         }
-      }
+    }
 
+    /**
+     * Loops through images for flying animation
+     *
+     * @param howLong controls length of animation
+     */
+    public void fly(int howLong) {
+        int paws = 150;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("dog_pant.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            audioInputStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        } catch (Exception ex) {
+            System.err.print(ex);
+        }
+        try {
+
+            for (int i = 0; i < howLong; i++) {
+                currentPound.updatePicture("run1");
+                currentPound.updateStats(this);
+                setHowFull(getHowFull() - 1);
+                setHowEepy(getHowEepy() - 1);
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run3");
+                setHowFull(getHowFull() - 1);
+                setHowEepy(getHowEepy() - 1);
+                currentPound.updateStats(this);
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run1");
+                setHowFull(getHowFull() - 1);
+                currentPound.updateStats(this);
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                currentPound.updatePicture("run3");
+                setHowFull(getHowFull() - 1);
+                setHowEepy(getHowEepy() - 1);
+
+                currentPound.updateStats(this);
+
+                currentPound.updatePanels();
+                Thread.sleep(paws);
+                setHowFull(getHowFull() - 1);
+                if (getHowFull() < 10) {
+                    break;
+                }
+                currentPound.updateStats(this);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Dog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (howLong > 2) {
+            currentPound.updatePicture("tired");
+        } else {
+            currentPound.updatePicture("default");
+
+        }
+    }
+
+    /**
+     * Triggers dog eating image and increases full level
+     */
     public void eat() {
 
         currentPound.updatePicture("eat");
@@ -169,7 +374,6 @@ public class Dog implements Serializable {
         try {
             Thread.sleep(500);
         } catch (InterruptedException err) {
-            //Lmao
         }
         currentPound.updateStats(this);
         currentPound.updatePicture("default");
@@ -177,6 +381,11 @@ public class Dog implements Serializable {
 
     }
 
+    /**
+     * Loops through running animation
+     *
+     * @param howLong int controlling length of animation
+     */
     public void run(int howLong) {
         int paws = 150;
         try {
@@ -214,7 +423,7 @@ public class Dog implements Serializable {
                 Thread.sleep(paws);
                 currentPound.updatePicture("run2");
                 setHowFull(getHowFull() - 1);
-                 setHowEepy(getHowEepy() - 1);
+                setHowEepy(getHowEepy() - 1);
 
                 currentPound.updateStats(this);
 
@@ -298,7 +507,7 @@ public class Dog implements Serializable {
     }
 
     public void setWeight(double weight) {
-        if (weight > 0 || height <= 350) {
+        if (weight > 0 || weight <= 350) {
             this.height = height;
         }
 
@@ -309,6 +518,11 @@ public class Dog implements Serializable {
         return sex;
     }
 
+    /**
+     * Sets dog sex
+     *
+     * @param sex String that takes user input and saves into sex variable
+     */
     public void setSex(String sex) {
         if (sex.equalsIgnoreCase("male") || (sex.equalsIgnoreCase("male")) || (sex.equalsIgnoreCase("boy"))) {
             this.sex = "Male";
@@ -366,6 +580,11 @@ public class Dog implements Serializable {
         this.currentPound = currentPound;
     }
 
+    /**
+     * description
+     *
+     * @return explanation
+     */
     @Override
     public String toString() {
         String output = "Name: " + name + ", age=" + age + ", breed=" + breed + ", color=" + color + ", height=" + height + ", weight=" + weight + ", sex=" + sex + ", howFull=" + howFull + ", howEepy=" + howEepy + '}';

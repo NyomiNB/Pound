@@ -26,9 +26,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
               <Component id="displayPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
               <Component id="statsPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="786" max="32767" attributes="0"/>
+              <EmptySpace pref="846" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,12 +59,11 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="messageLabel" min="-2" pref="377" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="iconLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="messageLabel" min="-2" pref="377" max="-2" attributes="0"/>
+                              <Component id="iconLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -75,9 +74,9 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="iconLabel" min="-2" pref="352" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
                   <Component id="messageLabel" min="-2" pref="48" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="controlPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -88,7 +87,7 @@
         <Component class="javax.swing.JLabel" name="messageLabel">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Hello World"/>
+            <Property name="text" type="java.lang.String" value=" "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="iconLabel">
@@ -121,11 +120,11 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="walkButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="flyButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="bathButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="peeButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="spinButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="poopButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="eatButton" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -158,9 +157,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="walkButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="bathButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spinButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="flyButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="peeButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="poopButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="layDownButton" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -199,13 +198,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="layDownButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="walkButton">
+            <Component class="javax.swing.JButton" name="flyButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Go on Walk"/>
+                <Property name="text" type="java.lang.String" value="Fly"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="walkButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="flyButtonActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="eatButton">
@@ -260,17 +259,23 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="bathButton">
+            <Component class="javax.swing.JButton" name="peeButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Take Bath"/>
+                <Property name="text" type="java.lang.String" value="Pee"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="peeButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="spinButton">
+            <Component class="javax.swing.JButton" name="poopButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Spin"/>
+                <Property name="text" type="java.lang.String" value="Poop"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="poopButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="sleepButton">
               <Properties>
