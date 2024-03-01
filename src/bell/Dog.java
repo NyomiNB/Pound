@@ -28,11 +28,13 @@ public class Dog implements Serializable {
     private double height;//in inches
     private double weight;//in pounds
     private String sex;
+    private String temperament;
     private int howFull;//1-10-100 being full 1 being hungry
     private ArrayList<String> medicalConditions = new ArrayList<>();
     private int howEepy;//1-10-100 being full 1 being hungry
 
-    public Dog(String name, int age, String breed, String color, int height, double weight, String sex, ArrayList<String> medicalConditions) {
+    public Dog(String name, int age, String breed, String color, int height, double weight, String sex, String temperament,
+            ArrayList<String> medicalConditions) {
         this.name = name;
         this.age = age;
         this.breed = breed;
@@ -40,6 +42,7 @@ public class Dog implements Serializable {
         this.height = height;
         this.weight = weight;
         this.sex = sex;
+        this.temperament = temperament;
         howFull = 5;
         howEepy = 50;//1-10-100 being not tired 1 being eepy
 
@@ -54,6 +57,7 @@ public class Dog implements Serializable {
         height = 22;
         weight = 70;
         sex = "Female";
+        temperament = "Timid"; 
         howFull = 5;
         howEepy = 50;//1-10-100 being not tired 1 being eepy
 
@@ -593,6 +597,14 @@ public class Dog implements Serializable {
             output += medicalConditions.get(i) + "\n";
         }
         return output;
+    }
+
+    public String getTemperament() {
+        return temperament;
+    }
+
+    public void setTemperament(String temperament) {
+        this.temperament = temperament;
     }
 
 }

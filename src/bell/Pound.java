@@ -104,8 +104,7 @@ public class Pound extends javax.swing.JFrame {
         nameLabel.setText("Name: " + dog.getName());
         ageLabel.setText("Age: " + dog.getAge());
         colorLabel.setText("Color: " + dog.getColor());
-        //tempLabel.setText("Temperament: " + dog.getTemp());
-
+        tempLabel.setText("Temperament: " + dog.getTemperament()); 
         breedLabel.setText("Breed: " + dog.getBreed());
         SexLabel.setText("Gender: " + dog.getSex());
         heightLabel.setText("Height: " + dog.getHeight() + " inches");
@@ -131,7 +130,7 @@ public class Pound extends javax.swing.JFrame {
 
         if (totalDogs < POUND_SIZE) {
             ImageIcon icon = new ImageIcon(getClass().getResource("dog1s20beast.png"));
-            Object[] editPossibilities = {"Name", "Breed", "Gender", "Color", "Age", "Weight", "Height", "Medical Conditions"};
+            Object[] editPossibilities = {"Name", "Breed", "Gender", "Color", "Age", "Weight", "Height", "Medical Conditions", "Temperament"};
             String editChoice = (String) JOptionPane.showInputDialog(displayPanel,
                     "What information would you like to update?", "Update",
                     JOptionPane.PLAIN_MESSAGE,
@@ -331,9 +330,23 @@ public class Pound extends javax.swing.JFrame {
 
                             }
                             break;
-
                         }
-                }
+                            case "Temperament":
+                             String temperamentInput = (String) JOptionPane.showInputDialog(displayPanel,
+                                "Please enter the dog's temperament", "Update",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                null,
+                                "Tame");
+                        if ((temperamentInput != null) && (temperamentInput.length() > 0)) {
+                            dogs[currentDog].setTemperament(temperamentInput);
+                            updateStats(dogs[currentDog]);
+
+                        } else {
+                            messageLabel.setText("Update Cancelled.");
+                        }
+                        break; 
+            }
             }
         }
     }//end of edit stats
@@ -855,7 +868,9 @@ public class Pound extends javax.swing.JFrame {
             messageLabel.setText(dogs[currentDog].getName() + " is eating!");
             dogs[currentDog].eat();
             controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            enableButtons();
+            enableButtons();            
+            messageLabel.setText("");
+
         } else {
             messageLabel.setText(dogs[currentDog].getName() + " is not hungry right now!");
         }
@@ -1216,8 +1231,7 @@ public class Pound extends javax.swing.JFrame {
         } else {
             messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to go on a walk!");
 
-        }
-
+        } 
     }//GEN-LAST:event_peeButtonActionPerformed
 
     private void poopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poopButtonActionPerformed
