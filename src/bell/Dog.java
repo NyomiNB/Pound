@@ -34,7 +34,7 @@ public class Dog implements Serializable {
     private int howEepy;//1-10-100 being full 1 being hungry
 
     public Dog(String name, int age, String breed, String color, int height, double weight, String sex, String temperament,
-            ArrayList<String> medicalConditions) {
+        ArrayList<String> medicalConditions) {
         this.name = name;
         this.age = age;
         this.breed = breed;
@@ -99,8 +99,7 @@ public class Dog implements Serializable {
         } catch (Exception ex) {
             System.err.print(ex);
         }
-
-        currentPound.updatePicture("beast");
+         currentPound.updatePicture("beast");
         currentPound.updatePanels();
         try {
             Thread.sleep(90);
@@ -110,10 +109,60 @@ public class Dog implements Serializable {
         currentPound.updatePicture("default");
         currentPound.updatePanels();
         try {
+            Thread.sleep(100);
+        } catch (InterruptedException err) {
+         }
+         currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+        try {
             Thread.sleep(90);
         } catch (InterruptedException err) {
             //Lmao
         }
+         currentPound.updatePicture("default");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException err) {
+         }
+         currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+         currentPound.updatePicture("default");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException err) {
+         } currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+         currentPound.updatePicture("default");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException err) {
+         }
+currentPound.updatePicture("beast");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(90);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+         currentPound.updatePicture("default");
+        currentPound.updatePanels();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException err) {
+         }
         currentPound.updatePicture("beast");
         currentPound.updatePanels();
         try {
@@ -123,7 +172,30 @@ public class Dog implements Serializable {
         }
         currentPound.updatePicture("default");
         currentPound.updatePanels();
-
+  
+}
+        
+      
+    public void sleep() {
+        System.out.println("honkShoo");
+        currentPound.updatePicture("sleep");
+        currentPound.updatePanels();
+        while (howEepy < 100) {
+            setHowFull(howFull - 1);
+            setHowEepy(howEepy + 2);
+            currentPound.updateStats(this);
+            currentPound.updatePanels();
+            try {
+                Thread.sleep(90);
+            } catch (InterruptedException err) {
+             }
+        }
+        currentPound.updatePicture("tired");
+        currentPound.updateStats(this);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException err) {
+         }
     }
 
     public void pee() {
@@ -160,27 +232,9 @@ public class Dog implements Serializable {
     }
 
     public void attack() {
-        String barkSound = "";
-        String growl = "dog_growl.wav";
-        if (weight < 7) {
-            System.out.println("Yip Yip");
-            barkSound = "bark_1.wav";
-        } else if (weight < 40) {
-            System.out.println("Arf Arf");
-            barkSound = "bark_2.wav";
-
-        } else if (weight < 70) {
-            System.out.println("Bark Bark");
-            barkSound = "bark_3.wav";
-
-        } else {
-            System.out.println("Woof Woof");
-            barkSound = "bark_5.wav";
-
-        }
-
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(barkSound));
+                         currentPound.updateStats(this);
+  try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("dog_growl.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -192,99 +246,12 @@ public class Dog implements Serializable {
         } catch (Exception ex) {
             System.err.print(ex);
         }
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource(growl));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-            audioInputStream.close();
-        } catch (UnsupportedAudioFileException ex) {
-            System.err.print(ex);
-        } catch (IOException ex) {
-            System.err.print(ex);
-        } catch (Exception ex) {
-            System.err.print(ex);
-        }
+                       
+            
+          
 
-        currentPound.updatePicture("beast");
-        currentPound.updateStats(this);
 
-        currentPound.updatePanels();
 
-        try {
-            Thread.sleep(90);
-        } catch (InterruptedException err) {
-            //Lmao
-        }
-        setHowFull(getHowFull() - 1);
-        setHowEepy(getHowEepy() - 1);
-
-        currentPound.updatePicture("default");
-        currentPound.updateStats(this);
-
-        currentPound.updatePanels();
-        try {
-            Thread.sleep(90);
-        } catch (InterruptedException err) {
-            //Lmao
-        }
-        setHowFull(getHowFull() - 1);
-        setHowEepy(getHowEepy() - 1);
-
-        currentPound.updatePicture("beast");
-        currentPound.updateStats(this);
-
-        currentPound.updatePanels();
-        try {
-            Thread.sleep(90);
-        } catch (InterruptedException err) {
-            //Lmao
-        }
-        setHowFull(getHowFull() - 1);
-        setHowEepy(getHowEepy() - 1);
-
-        currentPound.updatePicture("beast");
-        currentPound.updateStats(this);
-
-        currentPound.updatePanels();
-        try {
-            Thread.sleep(150);
-        } catch (InterruptedException err) {
-            //Lmao
-        }
-        setHowFull(getHowFull() - 1);
-        setHowEepy(getHowEepy() - 1);
-
-        currentPound.updatePicture("default");
-        currentPound.updatePanels();
-
-    }
-
-    /**
-     * displays sleep image until sleep bar is full
-     */
-    public void sleep() {
-        System.out.println("honkShoo");
-        currentPound.updatePicture("sleep");
-        currentPound.updatePanels();
-        while (howEepy < 100) {
-            setHowFull(howFull - 1);
-            setHowEepy(howEepy + 2);
-            currentPound.updateStats(this);
-            currentPound.updatePanels();
-            try {
-                Thread.sleep(90);
-            } catch (InterruptedException err) {
-                //Lmao
-            }
-        }
-        currentPound.updatePicture("tired");
-        currentPound.updateStats(this);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException err) {
-            //Lmao
-        }
     }
 
     /**

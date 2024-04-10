@@ -329,9 +329,9 @@ public class Pound extends javax.swing.JFrame {
                                 messageLabel.setText("Update Cancelled.");
 
                             }
-                            break;
-                        }
-                            case "Temperament":
+                         }
+                                break;
+                        case "Temperament":
                              String temperamentInput = (String) JOptionPane.showInputDialog(displayPanel,
                                 "Please enter the dog's temperament", "Update",
                                 JOptionPane.PLAIN_MESSAGE,
@@ -833,7 +833,6 @@ public class Pound extends javax.swing.JFrame {
                 }
             }
         }
-
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void layDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_layDownButtonActionPerformed
@@ -878,16 +877,18 @@ public class Pound extends javax.swing.JFrame {
     }//GEN-LAST:event_eatButtonActionPerformed
 
     private void attackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attackButtonActionPerformed
+               disableButtons();
+               updatePanels();
+            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
         if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() >= 20) {
             messageLabel.setText("");
-            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            disableButtons();
-            dogs[currentDog].attack();
-            controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            enableButtons();
-            System.out.println(dogs[currentDog].getHowEepy());
-            System.out.println(dogs[currentDog].getHowFull());
-        } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
+               updatePicture("beast");
+                           dogs[currentDog].attack(); 
+
+  
+ controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+          } else if (dogs[currentDog].getHowEepy() < 12 && dogs[currentDog].getHowFull() >= 20) {
             messageLabel.setText(dogs[currentDog].getName() + " is too tired to attack!");
 
         } else if (dogs[currentDog].getHowEepy() >= 12 && dogs[currentDog].getHowFull() < 20) {
@@ -896,6 +897,14 @@ public class Pound extends javax.swing.JFrame {
             messageLabel.setText(dogs[currentDog].getName() + " is too tired and hungry to attack!");
 
         }
+ 
+                                              try {
+            Thread.sleep(700);
+        } catch (InterruptedException err) {
+            //Lmao
+        }
+    enableButtons();
+    updatePanels();
     }//GEN-LAST:event_attackButtonActionPerformed
 
     private void fetchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fetchButtonActionPerformed
@@ -952,8 +961,14 @@ public class Pound extends javax.swing.JFrame {
     }//GEN-LAST:event_selectButtonActionPerformed
 
     private void barkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barkButtonActionPerformed
-        messageLabel.setText("");
+        
+           controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            disableButtons();
+ messageLabel.setText("");
         dogs[currentDog].bark();
+                    controlPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            enableButtons();
+
     }//GEN-LAST:event_barkButtonActionPerformed
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed

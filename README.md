@@ -1,2 +1,2 @@
 <h1> Pound </h1>
-~In Progress!~
+A GUI project where you can create and customize your own dogs!
