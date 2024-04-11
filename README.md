@@ -1,5 +1,6 @@
 <h1> Pound </h1>
 A GUI project where you can create and customize your own dogs!
+
 - Features:
     - Create a new pound, or load a previous one!
     - Customize your dog's:
