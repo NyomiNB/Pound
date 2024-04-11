@@ -18,5 +18,5 @@ A GUI project where you can create and customize your own dogs!
     - Reading and writing to a file
     - Use of instance variables
     - Use of repaint method
-    - Use of default + parameterized contsruuctors
+    - Use of default + parameterized constructors
  
