@@ -8,6 +8,7 @@ A GUI project where you can create and customize your own dogs!
       - Weight
       - Height
       - Color
+      - Breed
       - Medical Status
     - Interact with your dog! Ask it to perform tricks, take it on walks, play fetch, and more!
 - Skills:
@@ -18,5 +19,7 @@ A GUI project where you can create and customize your own dogs!
     - Reading and writing to a file
     - Use of instance variables
     - Use of repaint method
+    - Jdialogs
+    - Switch statements
     - Use of default + parameterized constructors
  
